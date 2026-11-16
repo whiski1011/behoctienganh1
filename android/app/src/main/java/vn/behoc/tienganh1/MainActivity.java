@@ -314,7 +314,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    static class BuildConfigHolder { static final String VERSION = "1.5.0"; }
+    static class BuildConfigHolder { static final String VERSION = "1.5.1"; }
 
     // ================= Nhận diện giọng nói =================
     private void sttEvent(String type, JSONArray list, String code) {

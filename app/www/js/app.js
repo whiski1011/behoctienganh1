@@ -7,7 +7,7 @@
   const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const sample = (a, n) => shuffle(a).slice(0, n);
   const pick = a => a[Math.floor(Math.random() * a.length)];
-  const VERSION = "1.5.0";
+  const VERSION = "1.5.1";
 
   // ---------- Dữ liệu lưu trữ ----------
   const KEY = "bhta1_state";

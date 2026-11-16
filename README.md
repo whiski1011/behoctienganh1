@@ -5,19 +5,15 @@
 - `app/www/` – giao diện, trò chơi, nội dung bài học
 - `packs/audio.zip` – 1.545 đoạn giọng đọc thu sẵn (gom lại cho gọn repo)
 - `packs/img.zip` – 324 hình minh họa 3D (Fluent Emoji 3D – Microsoft, giấy phép MIT)
-- `android/` – vỏ Android (WebView, giọng đọc, nhận giọng nói, sao lưu)
-- `tests/` – kiểm thử tự động · `tools/` – công cụ tạo giọng đọc, font, hình
+- `android/` – vỏ Android · `tests/` – kiểm thử · `tools/` – công cụ tạo giọng đọc, hình
+
+## Chạy bản web trên GitHub Pages
+Settings → Pages → Source: **Deploy from a branch**, Branch: **main**, thư mục **/ (root)** → Save.
+Vài phút sau mở `https://<tên-tài-khoản>.github.io/<tên-repo>/`.
+Lần đầu mở, app tự tải `packs/*.zip` (khoảng 7 MB) rồi chạy – không cần giải nén.
 
 ## Build APK
-Cần JDK 17+, Android SDK (platform 35, build-tools 35) và Gradle 8.9+:
-
-    ./build.sh
-
-`build.sh` tự giải nén `packs/*.zip` vào `app/www/` trước khi đóng gói.
-
-## Chạy bản web
-Giải nén `packs/audio.zip` và `packs/img.zip` vào `app/www/`, rồi mở `app/www/index.html`.
-Nếu dùng GitHub Pages: Settings → Pages → Source chọn **GitHub Actions**; workflow `.github/workflows/pages.yml` tự giải nén và đăng.
+Cần JDK 17+, Android SDK (platform 35) và Gradle 8.9+: `./build.sh`
 
 ## Lưu ý
-Giữ kỹ `android/behoc-release.jks` (mật khẩu `behoc2026`) – cần file này để bản cập nhật cài đè được lên bản cũ.
+Giữ kỹ `android/behoc-release.jks` (mật khẩu `behoc2026`) để bản cập nhật cài đè được lên bản cũ. Nên để repo ở chế độ Private.

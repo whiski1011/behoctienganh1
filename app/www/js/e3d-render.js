@@ -16,7 +16,7 @@
       if (f) {
         if (buf) { frag.appendChild(document.createTextNode(buf)); buf = ""; }
         const img = document.createElement("img");
-        img.className = "e3d"; img.src = "img/e/" + f + ".webp"; img.alt = g; img.draggable = false;
+        img.className = "e3d"; img.src = window.PACK ? PACK.url("img/e/" + f + ".webp") : "img/e/" + f + ".webp"; img.alt = g; img.draggable = false;
         frag.appendChild(img); changed = true;
       } else buf += g;
     }

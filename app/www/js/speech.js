@@ -78,17 +78,22 @@
   let useClips = true;
   let curAudio = null;
   S.missing = new Set();
-  S.setUseClips = v => { useClips = !!v; };
+  // trình duyệt không phát được Ogg/Opus (vd. Safari cũ) → dùng giọng đọc của máy
+  const canOgg = (() => { try { return !!document.createElement("audio").canPlayType('audio/ogg; codecs="opus"'); } catch (e) { return false; } })();
+  S.setUseClips = v => { useClips = !!v && canOgg; };
+  if (!canOgg) useClips = false;
   S.usingClips = () => useClips;
   S.hasClip = (text, lang) => !!(window.CLIPS && window.CLIPS[lang + "|" + String(text).trim()]);
-  function playClip(file, id, opts) {
-    const a = new Audio("audio/" + file + ".ogg");
+  function playClip(file, id, opts, onFail) {
+    const src = "audio/" + file + ".ogg";
+    const a = new Audio(window.PACK ? PACK.url(src) : src);
     a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true;
     a.playbackRate = Math.max(0.5, Math.min(1.3, (opts.slow ? 0.72 : 1) * (0.55 + rate * 0.5)));
     curAudio = a;
     const end = () => { if (curAudio === a) curAudio = null; finish(id); };
-    a.onended = end; a.onerror = end;
-    const p = a.play(); if (p && p.catch) p.catch(end);
+    const fail = () => { if (onFail) onFail(); end(); };
+    a.onended = end; a.onerror = fail;
+    const p = a.play(); if (p && p.catch) p.catch(e => { if (e && e.name === "AbortError") end(); else fail(); });
   }
 
   // ---------- Đọc ----------
@@ -100,15 +105,16 @@
     if (lang === "vi" && viMuted && !opts.force) return Promise.resolve();
     if (opts.flush !== false) S.stop();
     const id = ++seq;
-    const clip = useClips && window.CLIPS ? window.CLIPS[lang + "|" + String(text).trim()] : null;
+    const clip = useClips && !opts.noClip && window.CLIPS ? window.CLIPS[lang + "|" + String(text).trim()] : null;
     if (!clip && window.CLIPS) S.missing.add(lang + "|" + text);
     if (clip) {
+      let failed = false;
       return new Promise(resolve => {
         const to = setTimeout(() => finish(id), 2500 + String(text).length * 200);
         pending.set(id, { resolve, to });
         speakingCount++; setDuck();
-        playClip(clip, id, opts);
-      });
+        playClip(clip, id, opts, () => { failed = true; });
+      }).then(() => failed ? S.say(text, lang, Object.assign({}, opts, { noClip: true, flush: false })) : undefined);
     }
     const base = lang === "en" ? 0.82 : 0.95;
     const r = Math.max(0.4, base * rate * (opts.slow ? 0.62 : 1));
