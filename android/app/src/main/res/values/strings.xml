@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bé Học Tiếng Anh</string>
+    <color name="splash">#29B6F6</color>
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/splash</item>
+        <item name="android:statusBarColor">#0288D1</item>
+        <item name="android:navigationBarColor">#0288D1</item>
+    </style>
+</resources>

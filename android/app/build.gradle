@@ -1,0 +1,28 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'vn.behoc.tienganh1'
+    compileSdk 35
+    defaultConfig {
+        applicationId "vn.behoc.tienganh1"
+        minSdk 24
+        targetSdk 35
+        versionCode 6
+        versionName "1.5.0"
+    }
+    signingConfigs {
+        release {
+            storeFile file("../behoc-release.jks")
+            storePassword "behoc2026"
+            keyAlias "behoc"
+            keyPassword "behoc2026"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    lint { abortOnError false; checkReleaseBuilds false }
+}

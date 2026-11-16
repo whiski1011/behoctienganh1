@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Bé Học Tiếng Anh 1</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="ocean">
+<div id="decor" aria-hidden="true"></div>
+<div id="scenery" aria-hidden="true"><i class="hill h1"></i><i class="hill h2"></i><i class="hill h3"></i></div>
+<div id="fb" class="fb hidden"></div>
+
+<!-- TOP BAR -->
+<header id="topbar">
+  <button id="btnBack" class="icon-btn hidden" aria-label="Quay lại">⬅️</button>
+  <div id="titleWrap"><div id="pageTitle">Bé Học Tiếng Anh</div><div id="pageSub"></div></div>
+  <div id="starBox" title="Số sao">⭐ <span id="starCount">0</span></div>
+  <button id="btnMusic" class="icon-btn" aria-label="Nhạc nền">🎵</button>
+  <button id="btnSettings" class="icon-btn" aria-label="Cài đặt">⚙️</button>
+</header>
+
+<main id="app">
+  <!-- HOME -->
+  <section id="scr-home" class="screen active">
+    <div class="hero">
+      <div class="hero-top">
+        <button class="avatar" id="avatar" aria-label="Đổi hình đại diện">🐻</button>
+        <div class="hello-text">
+          <label for="kidName">Xin chào,</label>
+          <input id="kidName" maxlength="20" placeholder="Nhập tên bé..." autocomplete="off">
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><span class="st-ic flame">🔥</span><b id="streakNum">0</b><small>ngày liên tiếp</small></div>
+        <div class="stat"><div class="ring" id="goalRing"><span id="goalTxt">0/3</span></div><small>Mục tiêu hôm nay</small></div>
+        <div class="stat"><span class="st-ic">⭐</span><b id="homeStars">0</b><small>ngôi sao</small></div>
+      </div>
+    </div>
+    <div class="mascot-row">
+      <div class="mascot" id="mascot"></div>
+      <div class="bubble" id="mascotSay">Hello! Chào mừng bé đến với lớp học tiếng Anh!</div>
+    </div>
+    <button class="continue-card" id="btnContinue">
+      <div class="cc-icon" id="ccIcon">📖</div>
+      <div class="cc-main"><div class="cc-label">HỌC TIẾP NÀO</div><div class="cc-title" id="ccTitle">Bắt đầu học</div><div class="cc-sub" id="ccSub"></div></div>
+      <div class="cc-play">▶</div>
+    </button>
+    <h2 class="sec-title">🌍 Chọn thế giới</h2>
+    <div id="levelList" class="level-list"></div>
+    <button class="rep-card" id="btnRep">
+      <div class="rep-ring" id="repRing"><span>🎧</span></div>
+      <div class="cc-main"><div class="cc-label">NGHE MỖI NGÀY</div><div class="cc-title" id="repTitle">Tắm tiếng Anh 15 phút</div><div class="cc-sub" id="repSub">Vè · truyện · hội thoại bé đã học</div></div>
+      <div class="cc-play">▶</div>
+    </button>
+    <div class="home-actions">
+      <button class="tile-btn t-orange" id="btnChallenge"><span>🎲</span>Thử thách<br>ngẫu nhiên</button>
+      <button class="tile-btn t-yellow" id="btnStickers"><span>🏅</span>Bộ sưu tập<br>sticker</button>
+    </div>
+  </section>
+
+  <!-- UNITS OF A LEVEL (bản đồ) -->
+  <section id="scr-units" class="screen">
+    <div class="world-banner" id="worldBanner"></div>
+    <div class="map-wrap"><svg class="map-line" id="unitLine"></svg><div id="unitList" class="map"></div></div>
+  </section>
+
+  <!-- ACTIVITIES OF A UNIT (đường học) -->
+  <section id="scr-unit" class="screen">
+    <div class="unit-hero" id="unitHero"></div>
+    <div class="skill-legend">
+      <span class="sk sk-nghe">👂 Nghe</span><span class="sk sk-noi">🗣️ Nói</span><span class="sk sk-doc">👀 Đọc</span><span class="sk sk-viet">✍️ Viết</span>
+    </div>
+    <div class="map-wrap"><svg class="map-line" id="actLine"></svg><div id="actList" class="map"></div></div>
+  </section>
+
+  <!-- GAME -->
+  <section id="scr-game" class="screen">
+    <div class="game-head">
+      <div class="g-mascot" id="gMascot"></div>
+      <div class="progress"><div id="progBar"></div></div>
+      <div class="score-pill">🏆 <span id="scoreNow">0</span></div>
+    </div>
+    <div id="stage"></div>
+  </section>
+
+  <!-- NGHE MỖI NGÀY -->
+  <section id="scr-rep" class="screen">
+    <div class="rep-head"><div class="rep-time"><b id="repTime">00:00</b> / <span id="repGoalTxt">15:00</span></div><div class="progress"><div id="repBar"></div></div></div>
+    <div class="rep-goal-row"><span>⏱ Nghe mỗi ngày:</span><button class="rg-chip" data-m="5">5 phút</button><button class="rg-chip" data-m="10">10 phút</button><button class="rg-chip" data-m="15">15 phút</button></div>
+    <div class="rep-card-big" id="repStage"></div>
+    <div class="rep-ctrl">
+      <button class="speak-btn slow" id="repPrev" aria-label="Lùi">⏮️</button>
+      <button class="speak-btn rep-play" id="repPlay" aria-label="Phát / Dừng">⏸️</button>
+      <button class="speak-btn slow" id="repNext" aria-label="Tiếp">⏭️</button>
+    </div>
+    <p class="center muted small" id="repInfo"></p>
+  </section>
+
+  <!-- STICKERS -->
+  <section id="scr-stickers" class="screen">
+    <p class="center muted" id="stickerInfo"></p>
+    <div id="stickerGrid" class="sticker-grid"></div>
+  </section>
+</main>
+
+<!-- RESULT OVERLAY -->
+<div id="result" class="overlay hidden">
+  <div class="result-card pop-in">
+    <div class="res-burst"><div class="rays"></div><div class="result-mascot" id="resMascot">🎉</div></div>
+    <h2 id="resTitle">Giỏi quá!</h2>
+    <div class="res-stars" id="resStars"></div>
+    <div class="res-score">Điểm: <b id="resScore">0</b></div>
+    <div class="res-detail" id="resDetail"></div>
+    <div class="res-goal" id="resGoal"></div>
+    <div class="res-sticker hidden" id="resSticker"></div>
+    <div class="res-btns">
+      <button class="big-btn alt" id="resAgain">🔁 Chơi lại</button>
+      <button class="big-btn" id="resNext">➡️ Tiếp tục</button>
+    </div>
+  </div>
+</div>
+<canvas id="confetti"></canvas>
+
+<!-- SETTINGS OVERLAY -->
+<div id="settings" class="overlay hidden">
+  <div class="sheet pop-in">
+    <div class="sheet-head"><h2>⚙️ Cài đặt</h2><button class="icon-btn" id="setClose" aria-label="Đóng">✖️</button></div>
+    <h3>🎨 Giao diện</h3>
+    <div id="themeList" class="theme-list"></div>
+    <h3>🐻 Hình đại diện</h3>
+    <div id="avatarList" class="avatar-list"></div>
+    <h3>🔊 Âm thanh</h3>
+    <div class="row"><label>Nhạc nền</label><input type="range" id="volMusic" min="0" max="100"></div>
+    <div class="row"><label>Hiệu ứng</label><input type="range" id="volSfx" min="0" max="100"></div>
+    <div class="row"><label>Bài nhạc</label><select id="songSel"></select></div>
+    <h3>🗣️ Giọng đọc (giọng nữ)</h3>
+    <div class="row"><label>Loại giọng</label><select id="voiceMode"><option value="clip">🌟 Giọng chuẩn thu sẵn</option><option value="device">📱 Giọng của máy</option></select></div>
+    <p class="muted small" id="voiceModeInfo"></p>
+    <div id="deviceVoiceBox">
+    <div class="row"><label>Tiếng Anh</label><select id="voiceEn"></select><button class="mini-btn" id="testEn">▶️</button></div>
+    <div class="row"><label>Tiếng Việt</label><select id="voiceVi"></select><button class="mini-btn" id="testVi">▶️</button></div>
+    <p class="muted small" id="ttsHint"></p>
+    </div>
+    <div class="row"><label>Tốc độ đọc</label><input type="range" id="ttsRate" min="60" max="120"></div>
+    <div class="row"><label>Chỉ tiếng Anh</label><input type="checkbox" id="engOnly" class="switch"><span class="muted small">Học hoàn toàn bằng tiếng Anh như lớp GrapeSEED (ẩn nghĩa tiếng Việt)</span></div>
+    <div class="row"><label>Đọc nghĩa tiếng Việt</label><input type="checkbox" id="readVi" class="switch"></div>
+    <h3>📊 Góc phụ huynh</h3>
+    <div id="parentStats"></div>
+    <h3>💾 Sao lưu tiến độ</h3>
+    <div class="row"><label>Tự động sao lưu</label><select id="autoBackup"><option value="off">Tắt</option><option value="daily">Mỗi ngày 1 lần</option><option value="each">Sau mỗi bài học</option></select></div>
+    <div class="row"><button class="big-btn alt2" id="btnBackupNow" style="flex:1">💾 Sao lưu</button><button class="big-btn alt" id="btnRestore" style="flex:1">📂 Khôi phục</button></div>
+    <p class="muted small" id="backupInfo"></p>
+    <input type="file" id="restoreFile" accept=".json,application/json" class="hidden">
+    <h3>🧹 Dữ liệu</h3>
+    <button class="big-btn danger" id="btnReset">Xóa tiến độ học</button>
+    <p class="muted small center">Bé Học Tiếng Anh 1 · phiên bản <span id="ver"></span></p>
+  </div>
+</div>
+
+<div id="toast" class="hidden"></div>
+
+<script src="js/e3d.js"></script>
+<script src="js/e3d-render.js"></script>
+<script src="js/art.js"></script>
+<script src="js/content.js"></script>
+<script src="js/content_gs.js"></script>
+<script src="js/clips.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/speech.js"></script>
+<script src="js/app.js"></script>
+<script src="js/games.js"></script>
+</body>
+</html>
